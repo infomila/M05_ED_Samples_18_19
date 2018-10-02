@@ -338,3 +338,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+/DAW/UF1/3_Netbeans_Hello_World/JavaApplication5/nbproject/private/

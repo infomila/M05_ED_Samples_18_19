@@ -11,6 +11,10 @@ package edu.iesmila.db;
  */
 public class Driver {
     
+    public void iniciarDriver(){
+        System.out.println("Iniciant driver");
+    }
+    
     public static void main(String[] args) {
         System.out.println("Sóc el driver");
     }
