@@ -16,13 +16,13 @@ import java.io.File;
  *
  * @author Usuari
  */
-public class C01E01_HelloWorld {
+public class DocPdf {
         public static final String DEST = "results/chapter01/hello_world.pdf";
  
     public static void main(String args[]) throws IOException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();  
-        new C01E01_HelloWorld().createPdf(DEST);
+        new DocPdf().createPdf(DEST);
     }
  
     public void createPdf(String dest) throws IOException {
@@ -36,7 +36,7 @@ public class C01E01_HelloWorld {
         Document document = new Document(pdf);
  
         //Add paragraph to the document
-        document.add(new Paragraph("Hello World!"));
+        document.add(new Paragraph("DAW POWER!"));
  
         //Close document
         document.close();
