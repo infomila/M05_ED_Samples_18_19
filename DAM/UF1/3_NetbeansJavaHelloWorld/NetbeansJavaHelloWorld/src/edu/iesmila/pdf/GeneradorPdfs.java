@@ -17,14 +17,14 @@ import java.io.IOException;
  *
  * @author Usuari
  */
-public class C01E01_HelloWorld {
+public class GeneradorPdfs {
  
     public static final String DEST = "results/chapter01/hello_world.pdf";
  
     public static void main(String args[]) throws IOException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        new C01E01_HelloWorld().createPdf(DEST);
+        new GeneradorPdfs().createPdf(DEST);
     }
  
     public void createPdf(String dest) throws IOException {
@@ -38,7 +38,7 @@ public class C01E01_HelloWorld {
         Document document = new Document(pdf);
  
         //Add paragraph to the document
-        document.add(new Paragraph("Hello World!"));
+        document.add(new Paragraph("Sóc el puto amo!"));
  
         //Close document
         document.close();

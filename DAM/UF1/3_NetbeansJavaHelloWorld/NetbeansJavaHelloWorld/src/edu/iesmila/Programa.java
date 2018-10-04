@@ -6,6 +6,8 @@
 package edu.iesmila;
 
 import edu.iesmila.db.Driver;
+import edu.iesmila.pdf.GeneradorPdfs;
+import java.io.File;
 
 /**
  *
@@ -28,12 +30,26 @@ public class Programa {
      * 
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         System.out.println(">>>> Hola Món");
         
         // Usem el driver
         Driver d = new Driver();
-        d.iniciarDriver();        
+        d.iniciarDriver();      
+ 
+        //----------------------------------------------
+        String DEST = "results/chapter01/hello_world.pdf";   
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+        try {
+            new GeneradorPdfs().createPdf(DEST);
+        } 
+        catch(Exception ex){
+           System.out.println("He petat generant el pdf:"+ex.getMessage());
+        }
+        System.out.println("He acabat.");
+        //---------------------------------------------- 
+        
     }
     
 }
