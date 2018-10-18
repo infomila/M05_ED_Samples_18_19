@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="ElMeuProjecte" default="dist" basedir=".">
+    <description>
+         Guió Ant senzill
+    </description> 
+  <!--paràmetres goblals del guió -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="nom_del_jar" value="PDFCreator.jar" />
+
+  <target name="init">
+    <!-- Crea una marca de temps -->
+    <tstamp/>
+    <!--Crea el directori temporal de compilació -->
+    <mkdir dir="${build}"/> <!--fixeu-vos en l’us de les propietats! -->
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- ======= Creació d'un path que conté les llibreries *.jar ======= -->
+  <!-- ================================================================ -->
+  <path id="arxius_jar_de_llibreria">
+    <fileset dir="lib">
+        <include name="**/*.jar" />
+    </fileset>
+  </path>
+  
+  <target name="compile" depends="init"
+        description="compilar els fonts " >
+    <!--Compila totes les fonts del ${src} cap a ${build} -->
+    <!--javac srcdir="${src}" destdir="${build}"
+    classpath="lib/OpenPDFLib.jar;lib/bcprov-jdk15on-1.58.jar;lib/bcpkix-jdk15on-1.58.jar"    
+    /-->
+    
+    <javac srcdir="${src}" destdir="${build}"            
+    >
+        <classpath refid="arxius_jar_de_llibreria" />
+    </javac>
+    
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generar la distribució " >
+    <!--Crea el directori de distribució  -->
+    <mkdir dir="${dist}"/>
+    <!--
+    <mkdir dir="${dist}/lib"/>
+    <copy todir="${dist}/lib">
+        <fileset dir="lib"/>
+    </copy>-->
+    <!-- Crear les carpetes de dades i copiar els continguts -->
+    <mkdir dir="${dist}/output"/>
+    <mkdir dir="${dist}/data"/>
+    <mkdir dir="${dist}/screenshots"/>
+    <mkdir dir="${dist}/resources"/>
+    <copy todir="${dist}/data">
+        <fileset dir="data"/>
+    </copy>
+    <copy todir="${dist}/screenshots">
+        <fileset dir="screenshots"/>
+    </copy>
+    <copy todir="${dist}/resources">
+        <fileset dir="resources"/>
+    </copy>
+    
+    <!--V1. Creació del jar amb les llibreries externes ( carpeta /lib ) -->
+    <!--
+    
+    <jar jarfile="${dist}/${nom_del_jar}" basedir="${build}">
+       <manifest>
+         <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
+         <attribute name="Class-Path" value="lib/OpenPDFLib.jar lib/bcprov-jdk15on-1.58.jar lib/bcpkix-jdk15on-1.58.jar" />
+       </manifest>
+    </jar>
+    -->
+    <!--V2. Creació del jar amb les llibreries incorporades -->
+    <jar jarfile="${dist}/${nom_del_jar}" basedir="${build}">
+       <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
+       <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
+       <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
+       <manifest>
+         <attribute name="Main-Class" value="net.iesmila.demo.Main"/>         
+       </manifest>
+    </jar>    
+  </target>
+
+  <target name="clean"
+        description="netejar" >
+    <!--Esborra els directoris ${build} i ${dist} , incloent subdirectoris fills-->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
+  
+  
+  <target name="demo" depends="dist">
+        <!--         v arxiu jar a excutar                    v carpeta des d'on s'executa -->
+        <java jar="${dist}/${nom_del_jar}" fork="true" dir="${dist}">
+            <arg value="AmaticSC-Bold.ttf"/> <!-- un argument per línia ! -->
+            <arg value="XXXXXXX"/>
+            <arg value="municipis.csv"/>
+        </java>
+  </target>
+  
+  
+</project>
