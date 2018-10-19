@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
+<!-- some examples of how to customze the build. -->
 <!-- (If you delete it and reopen the project it will be recreated.) -->
 <!-- By default, only the Clean and Build commands use this build script. -->
 <!-- Commands such as Run, Debug, and Test only use this build script if -->
@@ -10,19 +10,75 @@
 <project name="7_Netbeans_Ant" default="default" basedir=".">
     <description>Builds, tests, and runs the project 7_Netbeans_Ant.</description>
     <import file="nbproject/build-impl.xml"/>
-    
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+        <pathelement location="lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+    <target name="processaExcel">
+        <echo message="${nomArxiu}"></echo>        
+    </target>
+    <target name="demoforeaech" description="xxx">
+        <foreach target="processaExcel" param="nomArxiu">
+            <path>
+                <fileset dir="data"></fileset>
+            </path>
+        </foreach>
+    </target>
     
     <target name="PrepararDeploymentClient"
             depends="init"
             description="Preparar deployment pel client">
+        
+        <input message="Vols enviar un FTP?" validargs="si,no"
+        defaultvalue="no" addproperty="volFTP" ></input>
+        
+        
+        <if>
+            <equals arg1="${volFTP}" arg2="si"></equals>
+            <then>
+                <input message="Introduir nom de l'arxiu" 
+                defaultvalue="sent.jar" addproperty="nomArxiu">   </input> 
+
+                <echo message="${volFTP}"></echo>
+                <echo message="${nomArxiu}"></echo>
+
+
+                <property file="ftp.cfg"></property>
+                <echo message="${FTP_SERVER.IP}"></echo>
+                <echo message="${FTP_SERVER.LOGIN}"></echo>
+                <echo message="${FTP_SERVER.PASSWORD}"></echo>
+                <!-- ***************************************************** -->
+
                 <jar jarfile="${dist.jar}"  update="true" >
-            <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
-            <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
-            <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
-            <manifest>
-              <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
-            </manifest>
-        </jar>
+                    <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
+                    <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
+                    <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
+                    <manifest>
+                      <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
+                    </manifest>
+                </jar>
+                <!-- ***************************************************** -->
+                <property name="arxiu_desti" value="${dist.dir}/${nomArxiu}.jar"></property>
+                <move file="${dist.jar}" tofile="${arxiu_desti}"></move>
+
+                <ftp server="${FTP_SERVER.IP}"
+                   userid="${FTP_SERVER.LOGIN}"
+                   password="${FTP_SERVER.PASSWORD}"
+                    remotedir="DEIXAR">
+                  <fileset file="${arxiu_desti}"/>
+                </ftp>
+
+
+            </then> 
+            <else>
+                 <echo message="que no !!!"></echo>
+            </else>
+        </if>
+        
+        
+        
+        
     </target>
       <target name="demo" depends="PrepararDeploymentClient" description="Demo">
         <java jar="${dist.jar}" fork="true" dir="dist">
