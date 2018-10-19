@@ -37,7 +37,7 @@
 
   
   <target name="demo" depends="dist" >
-    <java jar="${dist}/PDFCreator.jar" fork="true">
+    <java jar="${dist}/PDFCreator.jar" fork="true" dir="dist">
         <arg value="AmaticSC-Bold.ttf"/>
         <arg value="TITOLLLLL"/>
         <arg value="municipis.csv"/>
@@ -48,11 +48,12 @@
         description="generar la distribució " >
     <!--Crea el directori de distribució  -->
     <mkdir dir="${dist}"/>
-    <mkdir dir="${dist}/lib"/>
     <mkdir dir="${dist}/output"/>
+    
+    <!--mkdir dir="${dist}/lib"/>   
     <copy todir="${dist}/lib">
         <fileset dir="lib"/>
-    </copy>
+    </copy-->
     <!-- ====================================== -->
     <mkdir dir="${dist}/resources"/>
     <copy todir="${dist}/resources">
@@ -71,13 +72,24 @@
     
     
     
-    <!--Crea un jar del que hi ha dins de ${build}  anomenant-lo ElMeuProjecte-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/PDFCreator.jar" basedir="${build}" dir="${dist}">
+    <!--V1: Crear jar que depén de llibreries externes -->
+    <!--jar jarfile="${dist}/PDFCreator.jar" basedir="${build}" >
        <manifest>
          <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
          <attribute name="Class-Path" value="lib/OpenPDFLib.jar lib/bcpkix-jdk15on-1.58.jar lib/bcprov-jdk15on-1.58.jar" />
        </manifest>
+    </jar-->
+    <!-- V2: Crear super-jar amb les llibreries incrustades -->
+    <jar jarfile="${dist}/PDFCreator.jar" basedir="${build}" >
+       <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
+       <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
+       <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
+       <manifest>
+         <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
+       </manifest>
     </jar>
+    
+    
   </target>
 
   <target name="clean"

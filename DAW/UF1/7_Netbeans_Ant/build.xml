@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="7_Netbeans_Ant" default="default" basedir=".">
+    <description>Builds, tests, and runs the project 7_Netbeans_Ant.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    
+    <target name="PrepararDeploymentClient"
+            depends="init"
+            description="Preparar deployment pel client">
+                <jar jarfile="${dist.jar}"  update="true" >
+            <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
+            <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
+            <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
+            <manifest>
+              <attribute name="Main-Class" value="net.iesmila.demo.Main"/>
+            </manifest>
+        </jar>
+    </target>
+      <target name="demo" depends="PrepararDeploymentClient" description="Demo">
+        <java jar="${dist.jar}" fork="true" dir="dist">
+            <arg value="AmaticSC-Bold.ttf"/>
+            <arg value="TITOLLLLL"/>
+            <arg value="municipis.csv"/>
+        </java>
+      </target>
+    <target name="-post-jar" >
+        <echo message="Hola món"></echo>        
+            <!--Crea el directori de distribució  -->
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}/output"/>
+
+        <!-- ====================================== -->
+        <mkdir dir="${dist.dir}/resources"/>
+        <copy todir="${dist.dir}/resources">
+            <fileset dir="resources"/>
+        </copy>    
+        <!-- ====================================== -->
+        <mkdir dir="${dist.dir}/data"/>
+        <copy todir="${dist.dir}/data">
+            <fileset dir="data"/>
+        </copy>    
+        <!-- ====================================== -->
+        <mkdir dir="${dist.dir}/screenshots"/>
+        <copy todir="${dist.dir}/screenshots">
+            <fileset dir="screenshots"/>
+        </copy>    
+
+
+
+        
+        
+    </target>
+    
+</project>

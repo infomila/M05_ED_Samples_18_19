@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="7_Netbeans_Ant" default="default" basedir=".">
+    <description>Builds, tests, and runs the project 7_Netbeans_Ant.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <!-- =================================================================== -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+    <!-- =================================================================== -->
+    <target name="esborraArxiu">
+        <echo message="${nomDelArxiu}"></echo>
+    </target>
+    <target name="prova" description="xx">
+        
+        
+        <foreach target="esborraArxiu" param="nomDelArxiu">
+            <path >
+                <fileset dir="lib">
+                    <include name="**/*.jar"></include>
+                </fileset>
+            </path>
+        </foreach>
+        
+        
+        <echo message="Hola"></echo>
+        <!--antcall target="compile"></antcall-->
+        <input message="Introduir nom de l'arxiu"  defaultvalue="demo.txt" addproperty="arxiu"></input>
+        <input message="Vols sortir?" validargs="Y,N"  defaultvalue="N" addproperty="resposta"></input>
+        <if>                      
+            <equals arg1="${resposta}" arg2="Y" ></equals>                                
+            <then>
+                <property name="browser" value="C:\windows\System32\cmd.exe"></property>
+                <exec executable="${browser}">
+                    <arg value="/K"></arg>
+                    <arg value="dir"></arg>
+                    <arg value=">"></arg>
+                    <arg value="C:\temp\tmp.txt"></arg>
+                </exec>
+            </then>
+            <else>
+                <fail message="PUFF"></fail>
+            </else>
+        </if>
+        
+        <echo message="${resposta}"></echo>
+        
+    </target>
+    
+    <target name="PrepararJarClient" description="permet preparar un jar pel client" 
+            depends="init">
+        <property file="ftp.cfg"> </property>
+        <echo message="${FTP_SERVER.IP}"></echo>
+        <echo message="${FTP_SERVER.USER}"></echo>
+        <echo message="${FTP_SERVER.PASSWORD}"></echo>
+        
+        <jar jarfile="${dist.jar}" update="true">
+            <zipfileset src="lib/OpenPDFLib.jar" excludes="META-INF/*" />
+            <zipfileset src="lib/bcpkix-jdk15on-1.58.jar" excludes="META-INF/*" />
+            <zipfileset src="lib/bcprov-jdk15on-1.58.jar" excludes="META-INF/*" />
+        </jar>
+        
+        <ftp server="${FTP_SERVER.IP}" userid="${FTP_SERVER.USER}" 
+             password="${FTP_SERVER.PASSWORD}"
+             remotedir="DEIXAR">
+            <fileset file="${dist.jar}"/>
+        </ftp>
+    </target>
+    
+    <target name="-post-jar">
+        <!-- Crear les carpetes de dades i copiar els continguts -->
+        <mkdir dir="${dist.dir}/output"/>
+        <mkdir dir="${dist.dir}/data"/>
+        <mkdir dir="${dist.dir}/screenshots"/>
+        <mkdir dir="${dist.dir}/resources"/>
+        <copy todir="${dist.dir}/data">
+            <fileset dir="data"/>
+        </copy>
+        <copy todir="${dist.dir}/screenshots">
+            <fileset dir="screenshots"/>
+        </copy>
+        <copy todir="${dist.dir}/resources">
+            <fileset dir="resources"/>
+        </copy>
+        <!--jar jarfile="dist/7_Netbeans_Ant.jar"-->
+
+            
+   
+    </target>
+    
+    
+</project>
