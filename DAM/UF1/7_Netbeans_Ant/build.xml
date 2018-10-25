@@ -12,6 +12,7 @@
     <import file="nbproject/build-impl.xml"/>
 
     <!-- =================================================================== -->
+    <!--          INSTAL·LACIÓ DE LA LLIBRERIA ANT-CONTRIB PER PODER USAR IF, FOREACH ....-->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
         <classpath>
             <pathelement location="lib/ant-contrib.jar"/>
@@ -93,10 +94,82 @@
             <fileset dir="resources"/>
         </copy>
         <!--jar jarfile="dist/7_Netbeans_Ant.jar"-->
-
+        <!--antcall target="PrepararJarClient"></antcall-->
             
    
     </target>
     
+    
+    <target name="CreaPdfLllistat" description="CreaPdfLllistat" depends="jar">
+            
+        <splash displaytext="Creant llistat" showduration="1"></splash>
+        <!--antcall target="jar"></antcall-->
+        <!-- c. Demanar a l’usuari que triï una font d’entre les disponibles. L’elecció es farà mitjançant un desplegable. -->
+        <!-- Versió bàsica -->
+        <!--
+        <property file="etc/fonts.cfg"></property>
+        
+        -->
+        <!-- Versió PRO -->
+        <pathconvert property="FONTS" pathsep=","> 
+            <path>
+                <fileset dir="resources">
+                    <include name="*.ttf"></include>
+                </fileset>
+            </path>
+            <mapper type="flatten"/>
+        </pathconvert>       
+        <echo message="${FONTS}"></echo>        
+        <input message="Seleccioneu la font:" validargs="${FONTS}" addproperty="FONT_TRIADA"></input>    
+        <!--d. Es demana a l’usuari que entri el títol de l’informe. -->
+        <input message="Introduïu títol de l'informe" addproperty="TITOL"></input>
+        <echo message="${TITOL}"></echo>
+        <!-- Posteriorment es demanarà a l’usuari que trii entre dues opcions: executar l’informe del dia o executar tots els informes:
+                -->
+        <input message="Tria la teva opció:" validargs="Informe del dia,Tots els informes" 
+               addproperty="ELECCIO_TIPUS_INFORME" defaultvalue="Tots els informes">
+        </input>
+                                     
+         
+        <!-- esborrar els continguts de la carpeta dist/output -->
+        <delete includeemptydirs="true">
+            <fileset dir="output" includes="**/*"/>
+        </delete>
+        
+        <!-- per usar l'if ens cal incorporar la llibreria antcontrib ( veure que tenim el jar
+         al lib i un troç d'xml d'instal·lació al començament d'aquest arxiu -->    
+        <if>
+            <equals arg1="${ELECCIO_TIPUS_INFORME}" arg2="Informe del dia"></equals>
+            <then>
+                <!-- INFORME DEL DIA -->
+                <echo message="informe del dia"></echo>
+                <tstamp>
+                    <format property="DIA_SETMANA" pattern="F" />
+                </tstamp>    
+                <property name="ARXIU_A_TRACTAR" value="municipis_${DIA_SETMANA}.csv" ></property>
+                <echo message="${ARXIU_A_TRACTAR}"></echo>    
+                
+                <!-- java té dos modes:                
+                 a) classpath i main-class                  
+                 b) jar                
+                -->
+                <echo message="${run.classpath}"></echo>
+                <java classpath="${run.classpath}" classname="net.iesmila.demo.Main" 
+                   fork="true"
+                   dir="."
+                   failonerror="true">                    
+                    <arg value="${FONT_TRIADA}"></arg>
+                    <arg value="${TITOL}"></arg>
+                    <arg value="${ARXIU_A_TRACTAR}"></arg>
+                </java>                   
+                                                                    
+            </then>   
+            <else>
+                <!-- TOTS ELS INFORMES -->
+                <echo message="tots els informes"></echo>
+            </else>
+        </if>
+              
+    </target>
     
 </project>

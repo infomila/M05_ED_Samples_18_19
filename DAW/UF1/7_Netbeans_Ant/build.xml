@@ -15,6 +15,21 @@
         <pathelement location="lib/ant-contrib.jar"/>
         </classpath>
     </taskdef>
+    
+    <target name="prova" description="xxxx">
+        <property name="res" location="resources"></property>
+        <pathconvert pathsep=","  property="fonts" >
+            <fileset dir="resources">
+                <include name="**/*.ttf"></include>
+            </fileset> <map from="${res}/" to="" />
+            <!--flattenmapper/-->
+        </pathconvert>
+        
+        <echo message="${fonts}"></echo>
+        
+    </target>
+    
+    
     <target name="processaExcel">
         <echo message="${nomArxiu}"></echo>        
     </target>
@@ -87,6 +102,8 @@
             <arg value="municipis.csv"/>
         </java>
       </target>
+      
+      
     <target name="-post-jar" >
         <echo message="Hola món"></echo>        
             <!--Crea el directori de distribució  -->
