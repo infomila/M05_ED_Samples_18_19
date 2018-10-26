@@ -167,9 +167,46 @@
             <else>
                 <!-- TOTS ELS INFORMES -->
                 <echo message="tots els informes"></echo>
+                <foreach target="processa_arxiu" param="ARXIU_A_PROCESSAR">
+                    <!-- passem tots els paràmetres necessaris a al funció processa_arxiu -->
+                    <param name="FONT_TRIADA" value="${FONT_TRIADA}" ></param>
+                    <param name="TITOL" value="${TITOL}" ></param>
+                    <param name="run.classpath" value="${run.classpath}" ></param>
+                    <fileset dir="data">
+                        <include name="*.csv"></include>                            
+                    </fileset>
+                </foreach>
+                <!-- enzipar tots els arxius de output -->
+                <zip destfile="output/informes.zip"  basedir="output"/>
+                <delete>
+                    <fileset dir="output" includes="**/*.pdf"/>
+                </delete>
+                
             </else>
         </if>
               
     </target>
+    
+    <target name="processa_arxiu">
+        
+        <basename property="NOM_ARXIU" file="${ARXIU_A_PROCESSAR}"></basename>
+        
+        <echo message="${NOM_ARXIU}"></echo>
+        
+        <echo message="${FONT_TRIADA}"></echo>
+        <echo message="${TITOL}"></echo>
+        <echo message="${run.classpath}"></echo>
+        
+        <java classpath="${run.classpath}" classname="net.iesmila.demo.Main" 
+           fork="true"
+           dir="."
+           failonerror="true">                    
+            <arg value="${FONT_TRIADA}"></arg>
+            <arg value="${TITOL}"></arg>
+            <arg value="${NOM_ARXIU}"></arg>
+        </java>        
+    </target>
+    
+    
     
 </project>

@@ -10,11 +10,15 @@
 <project name="7_Netbeans_Ant" default="default" basedir=".">
     <description>Builds, tests, and runs the project 7_Netbeans_Ant.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <!-- ================================================================ -->
+    <!-- ====  INSTAL·LACIÓ DE L'ANT CONTRIB  =========================== -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
         <classpath>
         <pathelement location="lib/ant-contrib.jar"/>
         </classpath>
     </taskdef>
+    <!-- ================================================================ -->
     
     <target name="prova" description="xxxx">
         <property name="res" location="resources"></property>
@@ -126,10 +130,100 @@
             <fileset dir="screenshots"/>
         </copy>    
 
-
-
-        
         
     </target>
+    
+    
+    <target name="CreaPdfLllistat" description="ex6" depends="init">
+        <echo message="ex6"></echo>
+        <!-- a) -->
+        <splash displaytext="Creant llista" showduration="1"></splash>
+        <!-- b) -->
+        <!-- depends="jar" -->
+        <antcall target="jar"></antcall>
+        <!-- c) -->
+        <!-- Versió bàsica: carreguem les fonts de l'arxiu de propietats -->
+        <!--property file="etc/fonts.cfg"></property-->
+        <!-- Versió PRO: carregar els noms de les fonts en una variable -->
+        <pathconvert property="FONTS" pathsep=",">
+            <path>
+                <fileset dir="resources" >
+                    <include name="*.ttf"></include>
+                </fileset>
+            </path>
+            <mapper type="flatten"/>
+        </pathconvert>
+              
+        <echo message="${FONTS}"></echo>
+        <!-- Demanar a l’usuari que triï una font d’entre les disponibles. L’elecció es farà mitjançant un desplegable -->
+        <input message="Trieu una font:" validargs="${FONTS}" addproperty="FONT_TRIADA"></input>
+        
+        <!-- d. Es demana a l’usuari que entri el títol de l’informe. -->        
+        <input message="Introduïu el títol de l'informe" addproperty="TITOL"></input>
+        <echo message="${TITOL}" ></echo>
+            
+        <!--e. Posteriorment es demanarà a l’usuari que trii entre dues opcions: 
+                a) executar l’informe del dia o 
+                b) executar tots els informes:
+                        -->
+        <input  message="Trieu l'opció desitjada:" validargs="Informe del dia,Tots els informes" 
+                addproperty="OPCIO_TRIADA">
+        </input>
+        <!--e.1. Triï l’opció que trii, s’esborraran tots els arxius de la carpeta output abans de començar. -->
+         <delete includeEmptyDirs="true">
+            <fileset dir="dist/output"  includes="**/*"/>
+         </delete>
+
+        <!-- RECORDEU!!!!! WARNING !!!!!
+                Per usar if cal que incorporeu la llibreria antcontrib:
+                        a) posar el jar antcontrib.jar al lib+
+                        b) afegir un troç d'xml per registrar el jar ( veure inici arxiu ) 
+              ALGÚ HO HAVIA DE DIR.
+        -->        
+        <if>
+            <equals arg1="${OPCIO_TRIADA}" arg2="Informe del dia"></equals>
+            <then>
+                <!-- Informe del dia -->
+                <tstamp>
+                    <format property="DIA_SETMANA" pattern="F"></format>                       
+                </tstamp>
+                <property name="ARXIU_A_TRACTAR" value="municipis_${DIA_SETMANA}.csv"></property>
+                <echo message="${ARXIU_A_TRACTAR}"></echo>    
+                
+                <echo message="${run.classpath}"></echo>
+                <java classpath="${run.classpath}" classname="net.iesmila.demo.Main" dir="dist">
+                    <arg value="${FONT_TRIADA}"></arg>
+                    <arg value="${TITOL}"></arg>
+                    <arg value="${ARXIU_A_TRACTAR}"></arg>
+                </java>
+                
+            </then>
+            <else>
+                <!-- Opció tots els arxius -->
+                <foreach target="processar_arxiu" param="NOM_ARXIU" >
+                    <param name="run.classpath" value="${run.classpath}" />
+                    <param name="FONT_TRIADA" value="${FONT_TRIADA}" />
+                    <param name="TITOL" value="${TITOL}" />
+                    <fileset dir="data">
+                        <include name="*.csv"></include>
+                    </fileset>                        
+                </foreach>
+            </else>
+        </if>
+    </target>
+    
+    <target name="processar_arxiu">
+        <basename file="${NOM_ARXIU}" property="NOM_PELAT"></basename>
+        <echo message="${NOM_PELAT}"></echo>
+        <echo message="${run.classpath}"></echo>
+        <echo message="${FONT_TRIADA}"></echo>
+        <java classpath="${run.classpath}" classname="net.iesmila.demo.Main" dir="dist">
+            <arg value="${FONT_TRIADA}"></arg>
+            <arg value="${TITOL}"></arg>
+            <arg value="${NOM_PELAT}"></arg>
+        </java>
+    </target>
+    
+    
     
 </project>
