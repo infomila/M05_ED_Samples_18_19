@@ -208,6 +208,18 @@
                         <include name="*.csv"></include>
                     </fileset>                        
                 </foreach>
+                <!-- enzipar tots els informes generats -->
+                <zip destfile="dist/output/informes.zip">
+                    <fileset dir="dist/output">
+                        <include name="*.pdf" ></include>
+                    </fileset>
+                </zip>
+                <!-- esborrar tots els pdfs -->
+                <delete >
+                    <fileset dir="dist/output">
+                        <include name="*.pdf" ></include>
+                    </fileset>
+                </delete>
             </else>
         </if>
     </target>
