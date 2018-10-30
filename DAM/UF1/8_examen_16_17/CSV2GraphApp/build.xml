@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="CSV2GraphApp" default="default" basedir=".">
+    <description>Builds, tests, and runs the project CSV2GraphApp.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <!-- EXERCICI 4 -->
+    <target name="-post-jar" >
+        <!--a.	Copiï a la carpeta de distribució la carpeta csv  -->
+        <copy  todir="${dist.dir}/csv" >
+            <fileset dir="csv"/>            
+        </copy>
+        <!--b.	També crearà una carpeta buida anomenada output. -->
+        <mkdir dir="${dist.dir}/output" ></mkdir>
+        <!--c.	Fusionarà totes les llibreries de lib dins del jar, 
+        de forma que només haguem de distribuir un únic jar als clients -->
+        <jar file="${dist.jar}" update="true">
+            <zipgroupfileset dir="lib" includes="*.jar" excludes="META-INF"></zipgroupfileset>
+        </jar>
+        <!--d.	Esborrar la carpeta dist/lib (i tots els seus continguts), al fer el pas anterior ja no és necessària. -->
+        <delete dir="${dist.dir}/lib" ></delete>
+        
+    </target>
+       
+       
+     <!-- EXERCICI 6 -->
+    <!--Creeu una tasca Ant personalitzada amb el nom “GeneraInforme” que farà les següents tasques -->       
+    <target name="MostraGrafic" description="Exercici 6">
+        <!--a.	a.	Mostrar un <splash> amb un missatge  “Mostra Grafic” -->
+        <splash displaytext="Mostra gràfic" showduration="1"></splash>        
+        <!-- b.	Tornar a crear el jar de l’aplicació.-->
+        <antcall target="jar"></antcall>
+        <!-- c.	Demanar a l’usuari que ens doni una ruta
+                relativa a un arxiu de tipus *.def ( en teniu un a csv/poblacio.def). 
+                -->
+        <input message="Introduïu ruta a un *.def" addproperty="ARXIU_DEF" 
+        defaultvalue="csv/poblacio.def">
+        </input>
+        <!-- verificar que l'arxiu existeixi -->
+        <available file="${ARXIU_DEF}" property="ARXIU_EXISTENT"></available>
+        <echo message="${ARXIU_EXISTENT}"></echo>
+        
+        
+        
+        
+        
+    </target>
+       
+       
+</project>

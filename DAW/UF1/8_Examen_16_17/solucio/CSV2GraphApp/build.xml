@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="CSV2GraphApp" default="default" basedir=".">
+    <description>Builds, tests, and runs the project CSV2GraphApp.</description>
+    <import file="nbproject/build-impl.xml"/>
+    
+    <!-- ================================================================ -->
+    <!-- ====  INSTAL·LACIÓ DE L'ANT CONTRIB  =========================== -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+        <pathelement location="lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>    
+    <!-- ========================================================================== -->
+    <!-- EXERCICI 4  -->
+    <target name="-post-jar">
+   
+        <jar file="${dist.jar}" update="true">
+            <zipgroupfileset dir="lib" includes="*.jar" excludes="META-INF">                
+            </zipgroupfileset>
+            <zipgroupfileset file="..\JFreeChartLib\dist\JFreeChartLib.jar"  excludes="META-INF"></zipgroupfileset>
+        </jar>
+        <!-- b. Canviï el nom del jar a “CSV2G.jar” -->
+        <move file="${dist.jar}" tofile="${dist.dir}\CSV2G.jar"></move>
+        <!-- c. Copiï la carpeta csv dins de dist -->
+        <copy todir="dist\csv">
+            <fileset dir="csv"></fileset>
+        </copy>
+        <!-- d.	Esborri la carpeta dist/lib (i tots els seus continguts), al fer el pas anterior ja no és necessària. -->
+        <delete dir="${dist.dir}\lib"></delete>
+    </target>
+    <!-- ========================================================================== -->
+    <!-- EXERCICI 6  -->
+    <!--                                                     ***IMPORTANT*** -->
+    <target name="MostraGrafic" description="Exercici 6" depends="init">
+        <!-- a.	Mostrar un <splash> amb un missatge  “Mostra Grafic”-->
+        <splash displaytext="Mostra Grafic" showduration="1"></splash>
+        <!-- b.	Tornar a crear el jar de l’aplicació.-->
+        <antcall target="jar"></antcall>
+        <!-- c.	Demanar a l’usuari que ens doni una ruta relativa a 
+        un arxiu de tipus *.def ( en teniu un a csv/poblacio.def). 
+        -->
+        <input message="Introduir arxiu *.def:" defaultvalue="csv/poblacio.def" 
+               addproperty="ARXIU_DEF"   >
+        </input>
+        <!-- Tot seguit, el nostre script verificarà si per aquesta ruta 
+        introduïda existeix un arxiu (compte, NO cal validar que l’extensió sigui *.def , 
+        ens fiarem de l’usuari ). 
+        Per fer aquesta validació, utilitzarem la tasca <Available>,
+        que comprova l’existència d’un arxiu i, en cas afirmatiu, posa una 
+        variable que nosaltres triem a true, o false altrament.-->
+        <available file="${ARXIU_DEF}" property="ARXIU_EXISTENT"></available>
+        <echo message="${ARXIU_DEF}"></echo>
+        <echo message="${ARXIU_EXISTENT}"></echo>
+        <if>
+            <equals arg1="${ARXIU_EXISTENT}" arg2="true"></equals>
+            <then>
+                <echo message="L'arxiu existeix."></echo>
+                <!-- 
+                2.	Si la ruta és vàlida (existeix l’arxiu ), carregarem les parelles clau-valor que hi ha dins l’arxiu *.def. Si obriu un d’aquets arxius veureu que és un arxiu de text simple que conte 4 variables que proporcionen els valors dels quatre paràmetres que el nostre programa necessita per llançar el gràfic ( nom de l’arxiu csv on estan les dades, títols X i Y i subtítol )
+                -->
+                <property file="${ARXIU_DEF}" ></property>
+                <!--
+                3.	Executa l’aplicació des d’Ant per crear un gràfic segons 
+                        els valors definits per l’arxiu *.def que l’usuari ha triat.
+                -->     
+                <!-- ho fem de dos maneres...
+                a) executant des del Java compilat -->
+                <java classname="csv2graph.BarChartDemo1"
+                        classpath="${run.classpath}">
+                    <arg value="${CHART.CSV}"></arg>
+                    <arg value="${CHART.TITLE_X}"></arg>
+                    <arg value="${CHART.TITLE_Y}"></arg>
+                    <arg value="${CHART.SUBTITLE}"></arg>
+                </java>
+                <!-- b) executant el SUPER jar  -->
+                <!--java jar="${dist.dir}\CSV2G.jar">
+                    <arg value="${CHART.CSV}"></arg>
+                    <arg value="${CHART.TITLE_X}"></arg>
+                    <arg value="${CHART.TITLE_Y}"></arg>
+                    <arg value="${CHART.SUBTITLE}"></arg>
+                </java-->
+            </then>
+            <else>
+                <echo message="Arxiu ${ARXIU_DEF} no existeix."></echo>
+                <!--
+                1.	Si la ruta que ens dona l’usuari no existeix, mostrarem un
+                    missatge per la sortida de consola (<echo>) indicant el missatge
+                    “L’arxiu [nom arxiu] no existeix. “
+                -->
+                <fail message="Arxiu no trobat."></fail>
+            </else>               
+        </if>
+    </target>
+    
+    <!-- ========================================================================== -->
+    <!-- EXERCICI 7  -->
+    
+
+    <!-- Creeu una tasca Ant personalitzada anomenada “GraficsRemots”. 
+    Aquesta tasca farà les següents operacions.-->    
+    <!--                                                  ***IMPORTANT*** -->        
+    <target name="GraficsRemots" description="Exercici 7" depends="init">
+         
+        <!-- 1.	Crear la carpeta tmp a l’arrel del projecte.-->
+        <mkdir dir="tmp"> </mkdir>
+        
+        <!-- 2.	Usant la comanda <get>, descarregarà l’arxiu 
+        http://92.222.27.83/~bernat/estadistiques.zip  a la carpeta tmp  
+        del projecte -->
+        <get src="http://localhost/estadistiques.zip" dest="tmp"
+        >
+        </get>
+        <!-- 3.	Descomprimiu l’arxiu estadístiques.zip a la carpeta de destí csv -->
+        <unzip src="tmp/estadistiques.zip" dest="csv"></unzip>
+        <!-- 4.	Esborrar la carpeta tmp i tots els seus continguts.-->
+        <delete dir="tmp"></delete>
+        <!-- 5.	Per cada arxiu *.def a la carpeta csv, 
+            executeu l’aplicació vàries vegades, una per cadascun dels arxius *.def .
+                -->
+        <foreach target="execucio_iterativa_arxiu_def" param="ARXIU_DEF" >
+            <param name="run.classpath" value="${run.classpath}" ></param>
+            <fileset dir="csv">
+                <include name="*.def"></include>
+            </fileset>
+        </foreach>
+    </target>
+    
+    <target name="execucio_iterativa_arxiu_def" >
+        <echo message=" ==== ${ARXIU_DEF}"></echo>
+        <property file="${ARXIU_DEF}" ></property>
+        <!--
+        3.	Executa l’aplicació des d’Ant per crear un gràfic segons 
+                els valors definits per l’arxiu *.def que l’usuari ha triat.
+        -->     
+        <!-- ho fem de dos maneres...
+        a) executant des del Java compilat -->
+        <java classname="csv2graph.BarChartDemo1" fork="yes" spawn="true"
+                classpath="${run.classpath}">
+            <arg value="${CHART.CSV}"></arg>
+            <arg value="${CHART.TITLE_X}"></arg>
+            <arg value="${CHART.TITLE_Y}"></arg>
+            <arg value="${CHART.SUBTITLE}"></arg>
+        </java>        
+    </target>
+    
+</project>
