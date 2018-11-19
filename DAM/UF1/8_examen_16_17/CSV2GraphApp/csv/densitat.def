@@ -1,0 +1,4 @@
+CHART.CSV=csv/densitat.csv 
+CHART.TITLE_X=Densidad de població. 
+CHART.TITLE_Y=Num.habitants
+CHART.SUBTITLE=Municipis amb més de 20.000 habitants

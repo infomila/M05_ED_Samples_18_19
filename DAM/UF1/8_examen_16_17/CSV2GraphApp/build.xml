@@ -11,6 +11,18 @@
     <description>Builds, tests, and runs the project CSV2GraphApp.</description>
     <import file="nbproject/build-impl.xml"/>
 
+    
+    <!-- ================================================================ -->
+    <!-- ====  INSTAL·LACIÓ DE L'ANT CONTRIB  =========================== -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+        <pathelement location="lib/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>        
+    <!-- ================================================================ -->
+
+    
+    
     <!-- EXERCICI 4 -->
     <target name="-post-jar" >
         <!--a.	Copiï a la carpeta de distribució la carpeta csv  -->
@@ -32,7 +44,7 @@
        
      <!-- EXERCICI 6 -->
     <!--Creeu una tasca Ant personalitzada amb el nom “GeneraInforme” que farà les següents tasques -->       
-    <target name="MostraGrafic" description="Exercici 6">
+    <target name="MostraGrafic" description="Exercici 6" depends="init">
         <!--a.	a.	Mostrar un <splash> amb un missatge  “Mostra Grafic” -->
         <splash displaytext="Mostra gràfic" showduration="1"></splash>        
         <!-- b.	Tornar a crear el jar de l’aplicació.-->
@@ -46,12 +58,83 @@
         <!-- verificar que l'arxiu existeixi -->
         <available file="${ARXIU_DEF}" property="ARXIU_EXISTENT"></available>
         <echo message="${ARXIU_EXISTENT}"></echo>
-        
-        
-        
-        
-        
+        <if>
+            <equals arg1="${ARXIU_EXISTENT}" arg2="true" ></equals>
+            <then>
+                <!-- l'arxiu existeix -->   
+                <!-- 
+                2.	Si la ruta és vàlida (existeix l’arxiu ), carregarem les parelles clau-valor que hi ha dins l’arxiu *.def. Si obriu un d’aquets arxius veureu que és un arxiu de text simple que conte 4 variables que proporcionen els valors dels quatre paràmetres que el nostre programa necessita per llançar el gràfic ( nom de l’arxiu csv on estan les dades, títols X i Y i subtítol )
+                -->                             
+                <property file="${ARXIU_DEF}" ></property>
+                <!--
+                3.	Executa l’aplicació des d’Ant per crear un gràfic segons 
+                        els valors definits per l’arxiu *.def que l’usuari ha triat.
+                --> 
+                <!-- Ho podem fer de dues maneres -->                
+                <!-- Forma a) usant directament el jar -->
+                <!--
+                <java jar="${dist.jar}"> 
+                    <arg value="${CHART.CSV}"></arg>
+                    <arg value="${CHART.TITLE_X}"></arg>
+                    <arg value="${CHART.TITLE_Y}"></arg>
+                    <arg value="${CHART.SUBTITLE}"></arg>
+                </java> -->
+                <!-- Forma b) usant les classes compilades i les variables de NetBeans -->
+                <java classpath="${run.classpath}" classname="${main.class}">
+                    <arg value="${CHART.CSV}"></arg>
+                    <arg value="${CHART.TITLE_X}"></arg>
+                    <arg value="${CHART.TITLE_Y}"></arg>
+                    <arg value="${CHART.SUBTITLE}"></arg>
+                </java>
+            </then>
+            <else>
+                <fail message="Arxiu no existent"></fail>
+            </else>
+                
+        </if>
     </target>
-       
+
+    <!-- ========================================================================== -->
+    <!-- EXERCICI 7  -->
+    <!-- Creeu una tasca Ant personalitzada anomenada “GraficsRemots”. 
+    Aquesta tasca farà les següents operacions.-->          
+    <target name="GraficsRemots" description="exercicic 7" depends="init">
+                
+        <!-- 1.	Crear la carpeta tmp a l’arrel del projecte.-->
+        <mkdir dir="tmp"></mkdir>
+        <!-- 2.	Usant la comanda <get>, descarregarà l’arxiu 
+        http://92.222.27.83/~bernat/estadistiques.zip  a la carpeta tmp  
+        del projecte -->        
+        <get src="http://localhost/estadistiques.zip" dest="tmp"></get>
+        <!-- 3.	Descomprimiu l’arxiu estadístiques.zip a la carpeta de destí csv -->
+        <unzip src="tmp/estadistiques.zip" dest="csv"></unzip>
+         <!-- 4.	Esborrar la carpeta tmp i tots els seus continguts.-->
+        <delete dir="tmp"></delete>
+        <!-- 5.	Per cada arxiu *.def a la carpeta csv, 
+            executeu l’aplicació vàries vegades, una per cadascun dels arxius *.def .
+        -->
+        <foreach target="executa_arxiu_def" param="ARXIU_DEF">
+            <param name="run.classpath" value="${run.classpath}"></param>
+            <param name="main.class" value="${main.class}"></param>
+            <fileset dir="csv">
+                <include  name="*.def"></include>
+            </fileset>
+        </foreach>
+    </target>
+    
+    <target name="executa_arxiu_def" >
+        <echo message="  ${ARXIU_DEF}"></echo>
+        
+                <property file="${ARXIU_DEF}" ></property>
+
+                <!-- Forma b) usant les classes compilades i les variables de NetBeans -->
+                <java classpath="${run.classpath}" classname="${main.class}" spawn="true">
+                    <arg value="${CHART.CSV}"></arg>
+                    <arg value="${CHART.TITLE_X}"></arg>
+                    <arg value="${CHART.TITLE_Y}"></arg>
+                    <arg value="${CHART.SUBTITLE}"></arg>
+                </java>        
+    </target>
+                            
        
 </project>
