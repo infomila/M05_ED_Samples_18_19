@@ -1,0 +1,21 @@
+2;2;2;TipusTriangle.EQUILATER
+2;2;2.0009;TipusTriangle.EQUILATER
+10;5.001;5.001;TipusTriangle.ISOSCELES
+2;2;2.001;TipusTriangle.ISOSCELES
+4;4;2;TipusTriangle.ISOSCELES
+4;2;4;TipusTriangle.ISOSCELES
+2;4;4;TipusTriangle.ISOSCELES
+4;2;4.0009;TipusTriangle.ISOSCELES
+10;5;7;TipusTriangle.ESCALE
+4;2;2.001;TipusTriangle.ESCALE
+10;1;1;TipusTriangle.NO_ES_TRIANGLE
+10;5;5;TipusTriangle.NO_ES_TRIANGLE
+;;;
+-2;2;2;Excepcció: IllegalArgumentException
+2;-2;2;
+2;2;-2;
+0;2;2;
+2;0;2;
+2;2;0;
+-2;-2;-2;
+0;0;0;
