@@ -20,7 +20,7 @@ public class TriangleTest {
         
         double costats [][] = {
             {2,2,2},
-            {2.009,2,2},
+            {2.0009,2,2},
             {2.001, 2,2},
             {2,2,1},
             {2,1,2},
@@ -46,7 +46,9 @@ public class TriangleTest {
         
         for(int i=0;i<resultats.length;i++) {
             TipusTriangle tip = t.getTipusTriangle(costats[i][0], costats[i][1], costats[i][2]);
-            assertEquals(resultats[i], tip);
+            assertEquals("ERROR: "+costats[i][0]+","+costats[i][1]+","+costats[i][2]
+                    ,
+                    resultats[i], tip);
         }
         //--------------------------------------------------------------
         double costats_erronis [][] = {
