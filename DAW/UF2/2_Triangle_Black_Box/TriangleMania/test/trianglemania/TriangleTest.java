@@ -64,7 +64,11 @@ public class TriangleTest {
                      costatsOK[i][0],
                      costatsOK[i][1],
                      costatsOK[i][2]);
-            assertEquals( resultatsOK[i], tip );       
+            assertEquals("Error amb:" 
+                    +costatsOK[i][0]+", "+
+                     costatsOK[i][1]+", "+
+                     costatsOK[i][2]+"." 
+                    , resultatsOK[i], tip );       
         }
         //-------------------------------------------------
         // Test dels triangles amb errors

@@ -5,8 +5,6 @@
  */
 package trianglemania;
 
-import jdk.jshell.spi.ExecutionControl;
-
 /**
  *
  * @author Usuari
@@ -15,9 +13,30 @@ public class Triangle {
 
     public static TipusTriangle getTipusTriangle(
             double a, double b, double c) {                
-        // .....
-        throw new RuntimeException("Programa'm siusplau :-(");
-        //return TipusTriangle.NO_ES_TRIANGLE;
+        //---------------------------------
+        //   assercions
+        //---------------------------------
+        if( a<=0 ) throw new IllegalArgumentException("a erronia");
+        if( b<=0 ) throw new IllegalArgumentException("b erronia");
+        if( c<=0 ) throw new IllegalArgumentException("c erronia");        
+        //---------------------------------
+        //  no triangles !
+        //---------------------------------
+        if(     a+b-c <TOLERANCIA ||
+                a+c-b <TOLERANCIA || 
+                b+c-a < TOLERANCIA ) {
+            return TipusTriangle.NO_ES_TRIANGLE;
+        }     
+        
+        //---------------------------------
+        if(ig(a,b) && ig(c,b)) return TipusTriangle.EQUILATER;
+        if( ig(a,b) || ig(c,b) || ig(a,c))  return TipusTriangle.ISOSCELES;
+        return TipusTriangle.ESCALE;        
+    }
+    public static double TOLERANCIA = 0.0009999;
+    
+    private static boolean ig(double a, double b) {
+        return Math.abs(a-b)< TOLERANCIA;
     }
     
 }
