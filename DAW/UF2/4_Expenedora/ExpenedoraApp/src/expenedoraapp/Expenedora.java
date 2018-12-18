@@ -7,6 +7,8 @@ package expenedoraapp;
 public class Expenedora {
      public static TipusCanvi pagarMetalic( int preuEnCentims, byte[] monedesClient, byte[] monedesCaixa) 
      {
+         
+
         
         TipusCanvi er = TipusCanvi.VENDA_FAIL_ERROR_DADES;
         if( preuEnCentims<=0f ) return er; 

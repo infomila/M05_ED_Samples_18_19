@@ -44,12 +44,15 @@ public class Aparqueitor {
             boolean placesOcupades[]
     ) {
         try {
-
+         int a=0,b=1;
+         if(a==0 && b==1) {
+             a++;
+         }
             //------------ Asserts --------------------------
             if (codiClient < 0) {
                 return ERROR;
             }
-            if (longitudCotxeCm <= 0) {
+            if (longitudCotxeCm <= 99) {
                 return ERROR;
             }
             if (placesLongitudCm == null) {
@@ -61,7 +64,7 @@ public class Aparqueitor {
             if (placesOcupades == null) {
                 return ERROR;
             }
-            if (placesLongitudCm.length == 0) {
+            if (placesLongitudCm.length < 3) {
                 return ERROR;
             }
             if (placesLongitudCm.length != placesCodiClient.length) {
@@ -71,7 +74,7 @@ public class Aparqueitor {
                 return ERROR;
             }
             for (int lon : placesLongitudCm) {
-                if (lon <= 0) {
+                if (lon <= 99) {
                     return ERROR;
                 }
             }
