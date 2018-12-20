@@ -12,7 +12,7 @@ public class TheIncredibleMachine {
         int stage1stats[] = {0,0,0,0,0,0,0,0,0,0};
         int stage2magicnumber = 13;
         while(stage<3 && i<data.length) {
-            if(data[i]>9 || data[i]<0) continue;
+            if(data[i]>9 || data[i]<0) {i++;continue;}
             switch (stage){
                 case 0:
                     if(i>0 && data[i]==data[i-1]) {

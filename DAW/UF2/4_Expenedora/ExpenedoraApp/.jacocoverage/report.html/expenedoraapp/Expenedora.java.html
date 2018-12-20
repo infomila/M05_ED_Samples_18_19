@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Expenedora.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ExpenedoraApp&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">expenedoraapp</a> &gt; <span class="el_source">Expenedora.java</span></div><h1>Expenedora.java</h1><pre class="source lang-java linenums">package expenedoraapp;
+
+/**
+ *
+ * @author Usuari
+ */
+<span class="nc" id="L7">public class Expenedora {</span>
+     public static TipusCanvi pagarMetalic( int preuEnCentims, byte[] monedesClient, byte[] monedesCaixa) 
+     {
+        
+<span class="fc" id="L11">        TipusCanvi er = TipusCanvi.VENDA_FAIL_ERROR_DADES;</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if( preuEnCentims&lt;=0f ) return er; </span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if( monedesClient == null  ) return er; </span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        if( monedesCaixa==null ) return er; </span>
+<span class="fc bfc" id="L15" title="All 4 branches covered.">        if( (monedesClient.length!=3 || monedesCaixa.length!=3)) {</span>
+<span class="fc" id="L16">            return er;</span>
+        }
+        
+              
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for(int i=0;i&lt;monedesClient.length;i++) {</span>
+<span class="fc bfc" id="L21" title="All 4 branches covered.">            if(monedesClient[i]&lt;0 || monedesCaixa[i]&lt;0) {</span>
+<span class="fc" id="L22">                return er;</span>
+            }
+        }
+        // 50 cèntims,  cinc cèntims,  1 cèntim
+<span class="fc" id="L26">        int valors[] = new int[]{50,5,1};</span>
+<span class="fc" id="L27">        int centimsPagats  = </span>
+                ((int)monedesClient[0])*valors[0]+
+                ((int)monedesClient[1])*valors[1]+
+                ((int)monedesClient[2])*valors[2];
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(preuEnCentims&gt;centimsPagats) {</span>
+<span class="fc" id="L32">            return TipusCanvi.VENDA_FAIL_IMPORT_INSUFICIENT;</span>
+        } else {
+<span class="fc" id="L34">            monedesCaixa[2] += monedesClient[2];</span>
+<span class="fc" id="L35">            monedesCaixa[1] += monedesClient[1];</span>
+<span class="fc" id="L36">            monedesCaixa[0] += monedesClient[0];</span>
+<span class="fc" id="L37">            monedesClient[0]=0;</span>
+<span class="fc" id="L38">            monedesClient[1]=0;</span>
+<span class="fc" id="L39">            monedesClient[2]=0;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if(preuEnCentims==centimsPagats) {</span>
+                
+<span class="fc" id="L42">                return TipusCanvi.VENDA_OK_CANVI_EXACTE;</span>
+            } else /*if(preuEnCentims&lt;centimsPagats)*/ {
+
+                //----------------------------------
+                
+<span class="fc" id="L47">                int canvi = centimsPagats - preuEnCentims;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                for(int i=0;i&lt;3;i++) {                </span>
+<span class="fc" id="L49">                    int num = canvi/valors[i];</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                    if(monedesCaixa[i]&lt;num) {</span>
+<span class="fc" id="L51">                        num = monedesCaixa[i];</span>
+                    }
+<span class="fc" id="L53">                    monedesCaixa[i] -= num;</span>
+<span class="fc" id="L54">                    monedesClient[i]=(byte) num;</span>
+<span class="fc" id="L55">                    canvi -= num * valors[i];</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                    if(canvi==0) {</span>
+                                          
+<span class="fc" id="L58">                        return TipusCanvi.VENDA_OK_CANVI_EXACTE;</span>
+                    }
+                }
+  
+<span class="fc" id="L62">                return TipusCanvi.VENDA_OK_NO_TE_CANVI;</span>
+            }
+        }
+    }    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

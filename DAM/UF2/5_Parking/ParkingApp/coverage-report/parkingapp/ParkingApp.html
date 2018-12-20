@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JMockit Coverage Report - ParkingApp.java</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../coverage.css'/>
+  <link rel='shortcut icon' type='image/png' href='../logo.png'/>
+  <script type='text/javascript' src='../coverage.js'></script>
+  <script type='text/javascript' src='../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption>ParkingApp\src\parkingapp\ParkingApp.java</caption>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>6</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package parkingapp;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>/**
+ *
+ * @author Usuari
+ */</div><span>/*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>12</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l12s0'>public class ParkingApp {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>15</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l15s0'>    public static int <span class='static covered' title='Reads: 12 Writes: 0'>ERROR</span> = -2;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>16</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l16s0'>    public static int <span class='static covered' title='Reads: 2 Writes: 0'>NO_HI_HA_LLOC</span> = -1;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>17</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l17s0'>    public static int <span class='static covered' title='Reads: 9 Writes: 0'>CODI_NO_CLIENT</span> = 0;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'></td><td>&nbsp;</td>
+      <td class='comment' onclick='showHideLines(this)'><div>    /**
+     * La funció busca una plaça de pàrquing lliure per un client, donada la informació de l’estructura del pàrquing i de l’ocupació actual.
+     * 
+     * @param codiClient És codi del client que vol aparcar (p.ex. 175) . Si el client no és soci, s’indica amb un codi zero ( Parking.CODI_NO_CLIENT=0)
+     * @param longitudCotxeCm longitud en cm del cotxe que volem aparcar (p.ex. 400)
+     * @param placesCodiClient taula amb tantes posicions com places té el pàrquing. Cada posició de la taula conté el codi de client al que esta assignada la plaça, o zero (Parking.CODI_NO_CLIENT=0) si és una plaça disponible per a tothom. Per exemple, un parking de 3 places tindria placesCodiClient = { 123, 0, 300 }, la primera assignada al client 123, la segona és oberta per tothom, i la tercera exclusiva pel client 300.
+     * @param placesLongitudCm taula amb tantes posicions com places té el pàrquing. Cada posició de la taula conté la longitud en cm d’una plaça.
+     * @param placesOcupades taula amb tantes posicions com places té el pàrquing. Cada posició de la taula indica si la plaça ja està ocupada per un cotxe (true)
+     * @return 
+     */</div><span>    /*...*/</span></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>    public static int buscaLlocLliure(</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            int codiClient,</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>32</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            int longitudCotxeCm,</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            int placesCodiClient[],</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            int placesLongitudCm[],</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>35</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            boolean placesOcupades[]</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>    ) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>        try {</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>39</td><td class='count'>17</td>
+      <td><pre class='prettyprint covered' id='l39s0'>            int a=0, b=0;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td class='count'>17</td>
+      <td><pre class='prettyprint jmp'>            <span id='l40s0' title='Executions: 17' class='covered'>if(a==0</span> && <span id='l40s1' title='Executions: 0' class='uncovered'>b==0 )</span> <span id='l40s2' title='Executions: 0' class='uncovered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td class='count'>17</td>
+      <td><pre class='prettyprint covered' id='l41s0'>                a++;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>45</td><td>&nbsp;</td>
+      <td><pre class='comment'>            //------------ Asserts --------------------------</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td class='count'>17</td>
+      <td><pre class='prettyprint jmp'>            <span id='l46s0' title='Executions: 17' class='covered'>if (codiClient &lt; 0)</span> <span id='l46s1' title='Executions: 16' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l47s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>49</td><td class='count'>16</td>
+      <td><pre class='prettyprint jmp'>            <span id='l49s0' title='Executions: 16' class='covered'>if (longitudCotxeCm &lt;= 99)</span> <span id='l49s1' title='Executions: 15' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>50</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l50s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td class='count'>15</td>
+      <td><pre class='prettyprint jmp'>            <span id='l52s0' title='Executions: 15' class='covered'>if (placesLongitudCm == null)</span> <span id='l52s1' title='Executions: 14' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l53s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>55</td><td class='count'>14</td>
+      <td><pre class='prettyprint jmp'>            <span id='l55s0' title='Executions: 14' class='covered'>if (placesCodiClient == null)</span> <span id='l55s1' title='Executions: 13' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l56s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td class='count'>13</td>
+      <td><pre class='prettyprint jmp'>            <span id='l58s0' title='Executions: 13' class='covered'>if (placesOcupades == null)</span> <span id='l58s1' title='Executions: 12' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l59s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>12</td>
+      <td><pre class='prettyprint jmp'>            <span id='l61s0' title='Executions: 12' class='covered'>if (placesLongitudCm.length &lt;3)</span> <span id='l61s1' title='Executions: 11' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l62s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td class='count'>11</td>
+      <td><pre class='prettyprint jmp'>            <span id='l64s0' title='Executions: 11' class='covered'>if (placesLongitudCm.length != placesCodiClient.length)</span> <span id='l64s1' title='Executions: 9' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l65s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>9</td>
+      <td><pre class='prettyprint jmp'>            <span id='l67s0' title='Executions: 9' class='covered'>if (placesLongitudCm.length != placesOcupades.length)</span> <span id='l67s1' title='Executions: 8' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l68s0'>                return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td class='count'>37</td>
+      <td><pre class='prettyprint jmp'>            <span id='l70s0' title='Executions: 37' class='covered'>for (int lon</span> : <span id='l70s1' title='Executions: 31' class='covered'>placesLongitudCm)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td class='count'>31</td>
+      <td><pre class='prettyprint jmp'>                <span id='l71s0' title='Executions: 31' class='covered'>if (lon &lt;= 99)</span> <span id='l71s1' title='Executions: 29' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td class='count'>2</td>
+      <td><pre class='prettyprint covered' id='l72s0'>                    return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>32</td>
+      <td><pre class='prettyprint jmp'>            <span id='l75s0' title='Executions: 32' class='covered'>for (int tip</span> : <span id='l75s1' title='Executions: 27' class='covered'>placesCodiClient)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>27</td>
+      <td><pre class='prettyprint jmp'>                <span id='l76s0' title='Executions: 27' class='covered'>if (tip &lt; 0)</span> <span id='l76s1' title='Executions: 26' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l77s0'>                    return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td>&nbsp;</td>
+      <td><pre class='comment'>            //-----------------------------------------------</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>5</td>
+      <td><pre class='prettyprint jmp'>            <span id='l81s0' title='Executions: 5' class='covered'>if (codiClient == CODI_NO_CLIENT)</span> <span id='l81s1' title='Executions: 3' class='covered'>{</span></pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>83</td><td class='count'>9</td>
+      <td><pre class='prettyprint jmp'>                <span id='l83s0' title='Executions: 9' class='covered'>for (int i = 0; i &lt; placesLongitudCm.length; i++)</span> <span id='l83s1' title='Executions: 8' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>84</td><td class='count'>8</td>
+      <td><pre class='prettyprint jmp'>                    <span id='l84s0' title='Executions: 8' class='covered'>if (!placesOcupades[i])</span> <span id='l84s1' title='Executions: 4' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>85</td><td class='count'>4</td>
+      <td><pre class='prettyprint jmp'>                        <span id='l85s0' title='Executions: 4' class='covered'>if (longitudCotxeCm &lt; placesLongitudCm[i])</span> <span id='l85s1' title='Executions: 2' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>86</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>                            <span id='l86s0' title='Executions: 2' class='covered'>if (placesCodiClient[i] == CODI_NO_CLIENT)</span> <span id='l86s1' title='Executions: 1' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>87</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l87s0'>                                placesOcupades[i] = true;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l88s0'>                                return i;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                        }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>91</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                    }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>92</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>93</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l93s0'>                return NO_HI_HA_LLOC;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>94</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            } else {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td class='count'>17</td>
+      <td><pre class='prettyprint jmp'>                <span id='l95s0' title='Executions: 17' class='covered'>for (int i = 0; i &lt; placesLongitudCm.length; i++)</span> <span id='l95s1' title='Executions: 15' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td class='count'>15</td>
+      <td><pre class='prettyprint jmp'>                    <span id='l96s0' title='Executions: 15' class='covered'>if (!placesOcupades[i])</span> <span id='l96s1' title='Executions: 7' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td class='count'>8</td>
+      <td><pre class='prettyprint jmp'>                        <span id='l97s0' title='Executions: 8' class='covered'>if (longitudCotxeCm &lt; placesLongitudCm[i])</span> <span id='l97s1' title='Executions: 3' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>98</td><td class='count'>5</td>
+      <td><pre class='prettyprint jmp'>                            <span id='l98s0' title='Executions: 5' class='covered'>if (placesCodiClient[i] == codiClient)</span> <span id='l98s1' title='Executions: 4' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l99s0'>                                placesOcupades[i] = true;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l100s0'>                                return i;</pre></td>
+    </tr>
+    <tr><td class='line'></td><td colspan='2'>&nbsp;</td></tr>
+    <tr>
+      <td class='line'>102</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>103</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                        }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>104</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                    }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>105</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td class='count'>12</td>
+      <td><pre class='prettyprint jmp'>                <span id='l106s0' title='Executions: 12' class='covered'>for (int i = 0; i &lt; placesLongitudCm.length; i++)</span> <span id='l106s1' title='Executions: 11' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td class='count'>11</td>
+      <td><pre class='prettyprint jmp'>                    <span id='l107s0' title='Executions: 11' class='covered'>if (!placesOcupades[i])</span> <span id='l107s1' title='Executions: 6' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td class='count'>5</td>
+      <td><pre class='prettyprint jmp'>                        <span id='l108s0' title='Executions: 5' class='covered'>if (longitudCotxeCm &lt; placesLongitudCm[i])</span> <span id='l108s1' title='Executions: 3' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>109</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>                            <span id='l109s0' title='Executions: 2' class='covered'>if (placesCodiClient[i] == CODI_NO_CLIENT)</span> <span id='l109s1' title='Executions: 1' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>110</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l110s0'>                                placesOcupades[i] = true;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>111</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l111s0'>                                return i;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>113</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                        }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>114</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                    }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>115</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>                }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>116</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l116s0'>                return NO_HI_HA_LLOC;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>117</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>            }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>118</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l118s0'>        } catch (Exception ex) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>119</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l119s0'>            return ERROR;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>120</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>        }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>121</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>    }</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>122</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

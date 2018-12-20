@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ca"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Aparqueitor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;5_Parking&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">pkg5_parking</a> &gt; <span class="el_source">Aparqueitor.java</span></div><h1>Aparqueitor.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pkg5_parking;
+
+/**
+ *
+ * @author Usuari
+ */
+<span class="nc" id="L12">public class Aparqueitor {</span>
+
+<span class="fc" id="L14">    public static int ERROR = -2;</span>
+<span class="fc" id="L15">    public static int NO_HI_HA_LLOC = -1;</span>
+<span class="fc" id="L16">    public static int CODI_NO_CLIENT = 0;</span>
+
+    /**
+     * La funció busca una plaça de pàrquing lliure per un client, donada la
+     * informació de l’estructura del pàrquing i de l’ocupació actual.
+     *
+     * @param codiClient És codi del client que vol aparcar (p.ex. 175) . Si el
+     * client no és soci, s’indica amb un codi zero ( Parking.CODI_NO_CLIENT=0)
+     * @param longitudCotxeCm longitud en cm del cotxe que volem aparcar (p.ex.
+     * 400)
+     * @param placesCodiClient taula amb tantes posicions com places té el
+     * pàrquing. Cada posició de la taula conté el codi de client al que esta
+     * assignada la plaça, o zero (Parking.CODI_NO_CLIENT=0) si és una plaça
+     * disponible per a tothom. Per exemple, un parking de 3 places tindria
+     * placesCodiClient = { 123, 0, 300 }, la primera assignada al client 123,
+     * la segona és oberta per tothom, i la tercera exclusiva pel client 300.
+     * @param placesLongitudCm taula amb tantes posicions com places té el
+     * pàrquing. Cada posició de la taula conté la longitud en cm d’una plaça.
+     * @param placesOcupades taula amb tantes posicions com places té el
+     * pàrquing. Cada posició de la taula indica si la plaça ja està ocupada per
+     * un cotxe (true)
+     * @return
+     */
+    public static int buscaLlocLliure(
+            int codiClient,
+            int longitudCotxeCm,
+            int placesCodiClient[],
+            int placesLongitudCm[],
+            boolean placesOcupades[]
+    ) {
+        try {
+<span class="fc" id="L47">         int a=0,b=1;</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">         if(a==0 &amp;&amp; b==1) {</span>
+<span class="fc" id="L49">             a++;</span>
+         }
+            //------------ Asserts --------------------------
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (codiClient &lt; 0) {</span>
+<span class="fc" id="L53">                return ERROR;</span>
+            }
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            if (longitudCotxeCm &lt;= 99) {</span>
+<span class="fc" id="L56">                return ERROR;</span>
+            }
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            if (placesLongitudCm == null) {</span>
+<span class="nc" id="L59">                return ERROR;</span>
+            }
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">            if (placesCodiClient == null) {</span>
+<span class="nc" id="L62">                return ERROR;</span>
+            }
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (placesOcupades == null) {</span>
+<span class="nc" id="L65">                return ERROR;</span>
+            }
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (placesLongitudCm.length &lt; 3) {</span>
+<span class="fc" id="L68">                return ERROR;</span>
+            }
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (placesLongitudCm.length != placesCodiClient.length) {</span>
+<span class="fc" id="L71">                return ERROR;</span>
+            }
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (placesLongitudCm.length != placesOcupades.length) {</span>
+<span class="nc" id="L74">                return ERROR;</span>
+            }
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (int lon : placesLongitudCm) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">                if (lon &lt;= 99) {</span>
+<span class="nc" id="L78">                    return ERROR;</span>
+                }
+            }
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            for (int tip : placesCodiClient) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">                if (tip &lt; 0) {</span>
+<span class="nc" id="L83">                    return ERROR;</span>
+                }
+            }
+            //-----------------------------------------------
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (codiClient == CODI_NO_CLIENT) {</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                for (int i = 0; i &lt; placesLongitudCm.length; i++) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                    if (!placesOcupades[i]) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                        if (longitudCotxeCm &lt; placesLongitudCm[i]) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                            if (placesCodiClient[i] == CODI_NO_CLIENT) {</span>
+<span class="fc" id="L93">                                placesOcupades[i] = true;</span>
+<span class="fc" id="L94">                                return i;</span>
+                            }
+                        }
+                    }
+                }
+<span class="fc" id="L99">                return NO_HI_HA_LLOC;</span>
+            } else {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                for (int i = 0; i &lt; placesLongitudCm.length; i++) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                    if (!placesOcupades[i]) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                        if (longitudCotxeCm &lt; placesLongitudCm[i]) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                            if (placesCodiClient[i] == codiClient) {</span>
+<span class="fc" id="L105">                                placesOcupades[i] = true;</span>
+<span class="fc" id="L106">                                return i;</span>
+
+                            }
+                        }
+                    }
+                }
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                for (int i = 0; i &lt; placesLongitudCm.length; i++) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                    if (!placesOcupades[i]) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                        if (longitudCotxeCm &lt; placesLongitudCm[i]) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                            if (placesCodiClient[i] == CODI_NO_CLIENT) {</span>
+<span class="fc" id="L116">                                placesOcupades[i] = true;</span>
+<span class="fc" id="L117">                                return i;</span>
+                            }
+                        }
+                    }
+                }
+<span class="fc" id="L122">                return NO_HI_HA_LLOC;</span>
+            }
+<span class="nc" id="L124">        } catch (Exception ex) {</span>
+<span class="nc" id="L125">            return ERROR;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
