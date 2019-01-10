@@ -21,13 +21,12 @@ public class TheIncredibleMachineTest {
     public void testCrunch() {
         
         TheIncredibleMachine tim = new TheIncredibleMachine();
-        int data[] = {1,4,4,4,4,4,4, 8,8,8,8,7,7,7,7,5,5,5,5,1,10,1,3,5,5}; 
+        int data[] = {1,-2,13,1,1,1,1,1,1, 3,3,3,3,5,5,5,5,6,6,6,6,1,10,1,3}; // put your magic numbers ;-D
         tim.crunch(data);
-          
-        TheIncredibleMachine tim1 = new TheIncredibleMachine();
-        int data1[] = {-1,13,13,13}; 
-        tim1.crunch(data1);
-       
+        
+        int data2[] = {-1,12};
+        TheIncredibleMachine tim2 = new TheIncredibleMachine();
+        tim2.crunch(data2);
     }
     
 }

@@ -41,8 +41,6 @@ public class TheIncredibleMachine {
                         stage++;
                     }
                     break;
-                default:
-                    
                 } // end switch
                 //
                 i++;
