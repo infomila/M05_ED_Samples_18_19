@@ -1,71 +1,83 @@
 package refactoring;
 
 
+import static java.lang.String.valueOf;
+import static java.lang.String.valueOf;
+import static java.lang.String.valueOf;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.logging.Logger;
+import static refactoring.Movie.CHILDRENS;
+import static refactoring.Movie.NEW_RELEASE;
+import static refactoring.Movie.REGULAR;
 
 //From book: 'Refactoring' by Martin Fowler
 //This is the original code before refactoring begins
 
+/**
+ *
+ * @author Usuari
+ */
+
 public class Customer {
 
-	private String _name;
-	private LinkedList<Rental> _rentals = new LinkedList<Rental>();
+	private final String _name;
+	private final LinkedList<Rental> _rentals = new LinkedList<Rental>();
 	
-	public Customer(String name) {
+    /**
+     *
+     * @param name
+     */
+    public Customer(String name) {
 		_name = name;
 	}
 	
-	public void addRental(Rental arg) {
+    /**
+     *
+     * @param arg
+     */
+    public void addRental(Rental arg) {
 		_rentals.add(arg);
 	}
 	
-	public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
 		return _name;
 	}
 	
-	public String statement() {
+    /**
+     *
+     * @return
+     */
+    public String statement() {
 		double totalAmount = 0;
 		int frequentRenterPoints = 0;
-		Iterator<Rental> rentals = _rentals.iterator();
-		String result = "Rental Record for " + getName() + "\n";
+
+                String result = "Rental Record for " + getName() + "\n";
 		
-		while (rentals.hasNext()) {
-			double thisAmount = 0;
-			Rental each = (Rental) rentals.next();
-			
-			//determine amounts for each line
-			switch (each.getMovie().getPriceCode()) {
-			case Movie.REGULAR:
-				thisAmount += 2;
-				if (each.getDaysRented() > 2) 
-					thisAmount += (each.getDaysRented() - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				thisAmount += each.getDaysRented() * 3;
-				break;
-			case Movie.CHILDRENS:
-				thisAmount += 1.5;
-				if (each.getDaysRented() > 3)
-					thisAmount += (each.getDaysRented() - 3) * 1.5;
-				break;
-			}
-			
+                for( Rental rental : _rentals) {
+			double thisAmount = rental.getAmount();		
+			                                                
 			// add frequent renter points
 			frequentRenterPoints++;
 			// add bonus for a two day new release rental
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1) 
-				frequentRenterPoints++;
+			if ((rental.getMovie().getPriceCode() == NEW_RELEASE) && rental.getDaysRented() > 1) {
+                            frequentRenterPoints++;
+                        }
 			
 			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
+			result += "\t" + rental.getMovie().getTitle() + "\t" + valueOf(thisAmount) + "\n";
 			totalAmount += thisAmount;
 		}
 		
 		// add footer lines
-		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+		result += "Amount owed is " + valueOf(totalAmount) + "\n";
+		result += "You earned " + valueOf(frequentRenterPoints) + " frequent renter points";
 		
 		return result;
 	}
+    private static final Logger LOG = Logger.getLogger(Customer.class.getName());
 }
