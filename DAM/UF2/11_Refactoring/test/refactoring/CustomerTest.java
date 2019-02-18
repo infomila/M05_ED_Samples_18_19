@@ -1,40 +1,59 @@
 package refactoring;
 
-import refactoring.Movie;
-import refactoring.Rental;
-import refactoring.Customer;
+import java.util.logging.Logger;
 import junit.framework.TestCase;
+import static refactoring.Movie.CHILDRENS;
+import static refactoring.Movie.NEW_RELEASE;
+import static refactoring.Movie.REGULAR;
 
+/**
+ *
+ * @author Usuari
+ */
 public class CustomerTest extends TestCase {
 
+    @Override
 	protected void setUp() throws Exception {
 		super.setUp();
 	}
 
+    @Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
 
-	public void testCustomer() {
+    /**
+     *
+     */
+    public void testCustomer() {
 		Customer c = new Customer("David");
 		assertNotNull(c);	
 	}
 
-	public void testAddRental() {
+    /**
+     *
+     */
+    public void testAddRental() {
 		Customer customer2 = new Customer("Sallie");
-		Movie movie1 = new Movie("Gone with the Wind", Movie.REGULAR);
+		Movie movie1 = new Movie("Gone with the Wind", REGULAR);
 		Rental rental1 = new Rental(movie1, 3); // 3 day rental
 		customer2.addRental(rental1);
 	}
 
-	public void testGetName() {
+    /**
+     *
+     */
+    public void testGetName() {
 		Customer c = new Customer("David");
 		assertEquals("David", c.getName());
 	}
 
-	public void testStatementForRegularMovie() {
+    /**
+     *
+     */
+    public void testStatementForRegularMovie() {
 		Customer customer2 = new Customer("Sallie");
-		Movie movie1 = new Movie("Gone with the Wind", Movie.REGULAR);
+		Movie movie1 = new Movie("Gone with the Wind", REGULAR);
 		Rental rental1 = new Rental(movie1, 3); // 3 day rental
 		customer2.addRental(rental1);
 		String expected = "Rental Record for Sallie\n" +
@@ -45,9 +64,12 @@ public class CustomerTest extends TestCase {
 		assertEquals(expected, statement);
 	}
 	
-	public void testStatementForNewReleaseMovie() {
+    /**
+     *
+     */
+    public void testStatementForNewReleaseMovie() {
 		Customer customer2 = new Customer("Sallie");
-		Movie movie1 = new Movie("Star Wars", Movie.NEW_RELEASE);
+		Movie movie1 = new Movie("Star Wars", NEW_RELEASE);
 		Rental rental1 = new Rental(movie1, 3); // 3 day rental
 		customer2.addRental(rental1);
 		String expected = "Rental Record for Sallie\n" +
@@ -58,9 +80,12 @@ public class CustomerTest extends TestCase {
 		assertEquals(expected, statement);
 	}
 	
-	public void testStatementForChildrensMovie() {
+    /**
+     *
+     */
+    public void testStatementForChildrensMovie() {
 		Customer customer2 = new Customer("Sallie");
-		Movie movie1 = new Movie("Madagascar", Movie.CHILDRENS);
+		Movie movie1 = new Movie("Madagascar", CHILDRENS);
 		Rental rental1 = new Rental(movie1, 3); // 3 day rental
 		customer2.addRental(rental1);
 		String expected = "Rental Record for Sallie\n" +
@@ -71,13 +96,16 @@ public class CustomerTest extends TestCase {
 		assertEquals(expected, statement);
 	}
 	
-	public void testStatementForManyMovies() {
+    /**
+     *
+     */
+    public void testStatementForManyMovies() {
 		Customer customer1 = new Customer("David");
-		Movie movie1 = new Movie("Madagascar", Movie.CHILDRENS);
+		Movie movie1 = new Movie("Madagascar", CHILDRENS);
 		Rental rental1 = new Rental(movie1, 6); // 6 day rental
-		Movie movie2 = new Movie("Star Wars", Movie.NEW_RELEASE);
+		Movie movie2 = new Movie("Star Wars", NEW_RELEASE);
 		Rental rental2 = new Rental(movie2, 2); // 2 day rental
-		Movie movie3 = new Movie("Gone with the Wind", Movie.REGULAR);
+		Movie movie3 = new Movie("Gone with the Wind", REGULAR);
 		Rental rental3 = new Rental(movie3, 8); // 8 day rental
 		customer1.addRental(rental1);
 		customer1.addRental(rental2);
@@ -93,4 +121,5 @@ public class CustomerTest extends TestCase {
 	}
 	
 	//TODO make test for price breaks in code.
+    private static final Logger LOG = Logger.getLogger(CustomerTest.class.getName());
 }
