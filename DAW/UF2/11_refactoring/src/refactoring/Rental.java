@@ -3,9 +3,7 @@ package refactoring;
 //From book: 'Refactoring' by Martin Fowler
 
 import java.util.logging.Logger;
-import static refactoring.Movie.CHILDRENS;
-import static refactoring.Movie.NEW_RELEASE;
-import static refactoring.Movie.REGULAR;
+
 //From book: 'Refactoring' by Martin Fowler
 //This is the original code before refactoring begins
 
@@ -47,28 +45,17 @@ public class Rental {
 
     public double getAmount() {
         
-       double amount = 0;
-        //determine amounts for each line
-        switch (this.getMovie().getPriceCode()) {
-            case REGULAR:
-                    amount += 2;
-                    if (this.getDaysRented() > 2) {
-                        amount += (this.getDaysRented() - 2) * 1.5;
-                    }
-                    break;
-            case NEW_RELEASE:
-                    amount += this.getDaysRented() * 3;
-                    break;
-            case CHILDRENS:
-                    amount += 1.5;
-                    if (this.getDaysRented() > 3) {
-                        amount += (this.getDaysRented() - 3) * 1.5;
-                    }
-                    break;
+       return _movie.getAmount(getDaysRented());
+    }
+
+    public int getPoints() {
+         // add frequent renter points
+        int frequentRenterPoints=1;
+        // add bonus for a two day new release rental
+        if ((getMovie().getPriceCode() == MovieTypeEnum.NEW_RELEASE) && getDaysRented() > 1) {
+            frequentRenterPoints++;
         }
-			
-        return amount;
-        
+        return frequentRenterPoints;			
     }
 	
 	

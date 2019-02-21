@@ -7,9 +7,7 @@ import static java.lang.String.valueOf;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Logger;
-import static refactoring.Movie.CHILDRENS;
-import static refactoring.Movie.NEW_RELEASE;
-import static refactoring.Movie.REGULAR;
+
 
 //From book: 'Refactoring' by Martin Fowler
 //This is the original code before refactoring begins
@@ -53,31 +51,35 @@ public class Customer {
      * @return
      */
     public String statement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
 
-                String result = "Rental Record for " + getName() + "\n";
-		
-                for( Rental rental : _rentals) {
-			double thisAmount = rental.getAmount();		
-			                                                
-			// add frequent renter points
-			frequentRenterPoints++;
-			// add bonus for a two day new release rental
-			if ((rental.getMovie().getPriceCode() == NEW_RELEASE) && rental.getDaysRented() > 1) {
-                            frequentRenterPoints++;
-                        }
-			
-			// show figures for this rental
-			result += "\t" + rental.getMovie().getTitle() + "\t" + valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
-		}
-		
-		// add footer lines
-		result += "Amount owed is " + valueOf(totalAmount) + "\n";
-		result += "You earned " + valueOf(frequentRenterPoints) + " frequent renter points";
-		
-		return result;
-	}
+        String result = "Rental Record for " + getName() + "\n";
+        for( Rental rental : _rentals) {
+                double thisAmount = rental.getAmount();					                                                
+                // show figures for this rental
+                result += "\t" + rental.getMovie().getTitle() + "\t" + valueOf(thisAmount) + "\n";
+        }
+        // add footer lines
+        result += "Amount owed is " + valueOf(getTotalAmount()) + "\n";
+        result += "You earned " + valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
+        return result;
+    }
+    
+    private double getTotalAmount(){
+        double totalAmount = 0;
+        for( Rental rental : _rentals) {
+            totalAmount += rental.getAmount();	
+        }
+        return totalAmount;
+    }
+
+    private int getTotalFrequentRenterPoints(){
+        int points = 0;
+        for( Rental rental : _rentals) {
+            points += rental.getPoints();	
+        }
+        return points;
+    }
+    
+    
     private static final Logger LOG = Logger.getLogger(Customer.class.getName());
 }

@@ -6,9 +6,7 @@ import static java.lang.String.valueOf;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Logger;
-import static refactoring.Movie.CHILDRENS;
-import static refactoring.Movie.NEW_RELEASE;
-import static refactoring.Movie.REGULAR;
+
 
 //From book: 'Refactoring' by Martin Fowler
 //This is the original code before refactoring begins
@@ -49,26 +47,36 @@ public class Customer {
      *
      * @return
      */
-    public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-
+    public String getInvoce() {
         String result = "Rental Record for " + getName() + "\n";
-
         for (Rental rental : _rentals) {
-            double thisAmount = rental.getAmount();          
-            frequentRenterPoints += rental.getPoints();
-            
+            double thisAmount = rental.getAmount();                    
             // show figures for this rental
             result += "\t" + rental.getMovie().getTitle() + "\t" + valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
         }
-
         // add footer lines
-        result += "Amount owed is " + valueOf(totalAmount) + "\n";
-        result += "You earned " + valueOf(frequentRenterPoints) + " frequent renter points";
-
+        result += "Amount owed is " + valueOf(getTotalAmount()) + "\n";
+        result += "You earned " + valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
         return result;
     }
+    
+    public double getTotalAmount() {
+        double totalAmount = 0;
+        for (Rental rental : _rentals) {
+            totalAmount += rental.getAmount();  
+        }
+        return totalAmount;
+    }
+
+    public int getTotalFrequentRenterPoints() {
+        int frequentRenterPoints = 0;
+        for (Rental rental : _rentals) {
+            frequentRenterPoints += rental.getPoints();  
+        }
+        return frequentRenterPoints;
+    }
+
+    
+    
     private static final Logger LOG = Logger.getLogger(Customer.class.getName());
 }

@@ -16,46 +16,43 @@ public class Movie {
     /**
      *
      */
-    public static final int CHILDRENS = 2;
 
-    /**
-     *
-     */
-    public static final int NEW_RELEASE = 1;
-
-    /**
-     *
-     */
-    public static final int REGULAR = 0;
-	
-	private final String _title;
-	private int _priceCode;
+    private final String _title;
+    private MovieType _priceCode;
+    private MoviePriceHelper _priceHelper;
 	
     /**
      *
      * @param title
      * @param priceCode
      */
-    public Movie(String title, int priceCode) {
-		_title = title;
-		_priceCode = priceCode;
-	}
+    public Movie(String title, MovieType priceCode) {
+		_title = title;		
+                setPriceCode(priceCode);
+    }
+    
+    
 	
     /**
      *
      * @return
      */
-    public int getPriceCode() {
+    public MovieType getPriceCode() {
 		return _priceCode;
-	}
+    }
 
     /**
      *
      * @param arg
      */
-    public void setPriceCode(int arg) {
-		_priceCode = arg;
-	}
+    public void setPriceCode(MovieType arg) {
+            _priceCode = arg;
+            switch(_priceCode) {
+                case REGULAR: _priceHelper = new MovieTypeRegular(); break;
+                case NEW_RELEASE: _priceHelper = new MovieTypeNewRelease(); break;
+                case CHILDRENS: _priceHelper = new MovieTypeChildren(); break;                            
+            }
+    }
 
     /**
      *
@@ -65,6 +62,33 @@ public class Movie {
 		return _title;
 	}
     private static final Logger LOG = Logger.getLogger(Movie.class.getName());
+
+    
+    public double getAmount(int daysRented) {
+        return _priceHelper.getAmount(daysRented);
+    }
+    /*{
+        double thisAmount = 0;
+        switch (getPriceCode()) {
+            case REGULAR:
+                thisAmount += 2;
+                if (daysRented> 2) {
+                    thisAmount += (daysRented - 2) * 1.5;
+                }
+                break;
+            case NEW_RELEASE:
+                thisAmount += daysRented * 3;
+                break;
+            case CHILDRENS:
+                thisAmount += 1.5;
+                if (daysRented > 3) {
+                    thisAmount += (daysRented - 3) * 1.5;
+                }
+                break;
+        }
+
+        return thisAmount;
+    }*/
 	
 	
 }
