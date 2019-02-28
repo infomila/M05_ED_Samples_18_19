@@ -122,6 +122,12 @@ public class CustomerTest extends TestCase {
 							"You earned 4 frequent renter points";
 		String statement = customer1.getInvoce();
 		assertEquals(expected, statement);
+                
+                
+                
+                System.out.println(customer1.getInvoce());
+                System.out.println("-------------------------------");
+                System.out.println(customer1.getInvoceHTML());
 	}
 	
 	//TODO make test for price breaks in code.

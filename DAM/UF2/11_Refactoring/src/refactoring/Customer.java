@@ -48,17 +48,14 @@ public class Customer {
      * @return
      */
     public String getInvoce() {
-        String result = "Rental Record for " + getName() + "\n";
-        for (Rental rental : _rentals) {
-            double thisAmount = rental.getAmount();                    
-            // show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" + valueOf(thisAmount) + "\n";
-        }
-        // add footer lines
-        result += "Amount owed is " + valueOf(getTotalAmount()) + "\n";
-        result += "You earned " + valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
-        return result;
+        InvoiceBuilder builder = new InvoiceBuilderPlainText(this);
+        return builder.build();
     }
+    
+    public String getInvoceHTML() {
+        InvoiceBuilder builder = new InvoiceBuilderHTML(this);
+        return builder.build();
+    }    
     
     public double getTotalAmount() {
         double totalAmount = 0;
@@ -79,4 +76,10 @@ public class Customer {
     
     
     private static final Logger LOG = Logger.getLogger(Customer.class.getName());
+
+    public Iterable<Rental> getRentals() {
+        return _rentals;
+    }
+
+
 }
