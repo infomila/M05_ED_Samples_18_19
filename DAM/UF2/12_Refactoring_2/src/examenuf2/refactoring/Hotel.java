@@ -22,35 +22,35 @@ public class Hotel {
     public String getFacturacio(){
         
         double totalImports=0;
-        double totalDobles=0, totalTriples=0, totalSuites=0;
+        
+        double totalsXtipus[] = new double[TipusHabitacio.values().length];
+        
         double preu;
         StringBuilder sb = new StringBuilder();
         sb.append("> Facturació pendent: \n");
         
         for(Estansa e: mEstancesActuals) {
             String descripcioHabitacio = e.getHabitacio().getTipusHabitacio().getDescripcio();           
-            preu = e.getPreu();
-            
-            if(e.getHabitacio().getTipusHabitacio()==TipusHabitacio.DOBLE) {                   
-                totalDobles+= preu;                        
-            } else if(e.getHabitacio().getTipusHabitacio()==TipusHabitacio.TRIPLE) {                
-                totalTriples+= preu;  
-            } else {               
-                totalSuites+= preu;                  
-            }  
+            preu = e.getPreu();          
+            totalsXtipus[e.getHabitacio().getTipusHabitacio().ordinal()] += preu;
             totalImports+=preu;
             sb.append("\t-"+e.getHabitacio().getCodi()+":("+descripcioHabitacio+"+"+e.getRegim().getDescripcio()+"),\t nits d'estança:"+e.getDiesEstansa()+",\t preu total "+preu+"€ \n");                
         }
-        sb.append("=========================================================\n");        
-        sb.append(" Total dobles:\t"+totalDobles+"€ \n");    
-        sb.append(" Total triples:\t"+totalTriples+"€ \n");    
-        sb.append(" Total suites:\t"+totalSuites+"€ \n");    
-        sb.append("=========================================================\n");        
+        putLine(sb);        
+        for(int i=0;i<TipusHabitacio.values().length;i++) {
+            String tipusHabDescPlural = TipusHabitacio.values()[i].getDescripcioPlural();
+            sb.append(" Total "+ tipusHabDescPlural +":\t"+totalsXtipus[i]+"€ \n");                   
+        }
+        putLine(sb);        
         sb.append(" Total:\t"+totalImports+"€ \n");    
-        sb.append("=========================================================\n");        
+        putLine(sb);        
 
         
         return sb.toString();
+    }
+
+    private void putLine(StringBuilder sb) {
+        sb.append("=========================================================\n");
     }
     
     public static int nitsDiferencia( Date a, Date b) {

@@ -17,4 +17,9 @@ public enum TipusHabitacio {
     public String getDescripcio(){
         return descripcio;
     }
+    
+    public String getDescripcioPlural(){
+        return descripcio + "s";
+    }
+    
 }
