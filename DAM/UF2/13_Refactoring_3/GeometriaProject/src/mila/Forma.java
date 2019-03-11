@@ -9,18 +9,14 @@ package mila;
  *
  * @author Professor
  */
-public class Forma {
+public abstract class Forma {
 
-    public static final int QUADRAT = 1;
-    public static final int CERCLE = 2;
-    public static final int TRIANGE_RECTANGLE_ISOSCELES = 3;
-    public static final int TOTAL_TIPUS_FORMES=3;
+
     
-    
-    private int tipusForma;
+    private TipusForma tipusForma;
     private double mida;
 
-    public Forma(int _tipusForma, double _mida) {
+    public Forma(TipusForma _tipusForma, double _mida) {
         this.tipusForma = _tipusForma;
         this.mida = _mida;
     }
@@ -29,8 +25,14 @@ public class Forma {
         return mida;
     }
 
-    public int getTipusForma() {
+    public TipusForma getTipusForma() {
         return tipusForma;
     }
 
+    public String getNom() {
+      return tipusForma.getNomSingular();
+    }
+    
+    public abstract double getArea();
+    
 }
