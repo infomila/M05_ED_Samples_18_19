@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg5_parking;
-
-import com.google.gson.Gson;
+package test;
 
 /**
  *
  * @author Usuari
  */
-public class Main {
+public class Test {
 
     /**
      * @param args the command line arguments
