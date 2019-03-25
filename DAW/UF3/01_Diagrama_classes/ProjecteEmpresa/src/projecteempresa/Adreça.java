@@ -23,8 +23,15 @@ public class Adreça {
         return persona;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setPersona(Persona pPersona) {
+        
+      
+        
+        if(pPersona==this.persona) return;
+        
+        
+        if(pPersona!=null) pPersona.setAdreçaEnviament(this);
+        this.persona = pPersona;
     }
     
     
