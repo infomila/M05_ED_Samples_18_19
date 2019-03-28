@@ -13,11 +13,8 @@ class Empleat extends Persona {
     private String carrec;
     private int codiEmpleat;
     private BigDecimal salari;
-    private ArrayList<Projecte> projectesActuals;           //    p1     ,      p2      ,      p3
-    private ArrayList<Participacio> participacionsActuals;  //   {"P";30} ,  {"A";40},   {"CP";10}
-     
-    
-    
+    private ArrayList<Participacio> participacionsActuals;           //    p1     ,      p2      ,      p3
+             
     public Empleat(
             int codiEmpleat, String carrec, BigDecimal salari,
             long id, String NIF, String nom, String cognom1, Date dataNaixement, Adreça adreçaFacturacio) {
@@ -27,30 +24,31 @@ class Empleat extends Persona {
         this.carrec = carrec;
         this.salari = salari;
         
-        projectesActuals = new ArrayList<>();
+        participacionsActuals = new ArrayList<>();
                
     }
 //--------------------------------------------
-    public int getNumProjectesActuals() {
-        return projectesActuals.size();
+    public int getNumParticipacionsActuals() {
+        return participacionsActuals.size();
     }
-    public Projecte getProjecte(int idx) {
-        return projectesActuals.get(idx);
+    public Participacio getParticipacio(int idx) {
+        return participacionsActuals.get(idx);
     }
-    public Iterable<Projecte> getProjectes(){
-        return projectesActuals;
+    public Iterable<Participacio> getParticipacions(){
+        return participacionsActuals;
     }
-    public void addProjecte(Projecte nou) {
+    public void addParticipacioProjecte(Projecte nou, String rol) {
+       
+        Participacio p = new Participacio(this, nou, rol);
         
-        if (!projectesActuals.contains(nou)) {        
-            projectesActuals.add(nou);
-            
-            nou.addEmpleat(this);
+        if (!participacionsActuals.contains(p)) {        
+            participacionsActuals.add(p);           
+            nou.addEmpleat(this); /// ???? to be continued
         }
     }
     
     public boolean removeProjecte(Projecte aEsborrar) {
-        boolean esborrat = projectesActuals.remove(aEsborrar);
+        boolean esborrat = participacionsActuals.remove(aEsborrar);
         if(esborrat) {
             aEsborrar.removeEmpleat(this);
         }
