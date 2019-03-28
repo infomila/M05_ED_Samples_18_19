@@ -12,34 +12,37 @@ import java.util.Date;
 public class Empleat extends Persona{
     private int codiEmpleat;
     private  BigDecimal salari;
-    private ArrayList<Projecte> projectesActuals;   //   p1        ,    p2     ,   p3
-    private ArrayList<Participacio> participacions; //  {"prog";10}, {"cp";30} , {"anal";5}
+    private ArrayList<Participacio> participacionsActuals;   //   p1        ,    p2     ,   p3
 
     public Empleat(int codiEmpleat, BigDecimal salari, long id, String NIF, String nom, String cognom1, Date dataNaixement, Adreça pAdreçaEnviament) {
         super(id, NIF, nom, cognom1, dataNaixement, pAdreçaEnviament);
         this.codiEmpleat =  codiEmpleat;
         this.salari = salari;
-        this.projectesActuals = new ArrayList<Projecte>();
+        this.participacionsActuals = new ArrayList<Participacio>();
     }
 //--------------------------------------
 //----------------------------------------
     // encapsulem empleatsActuals
-    public int getNumProjectes(){ return projectesActuals.size();}
-    public Projecte getProjecte(int idx) {
-        return projectesActuals.get(idx);
-    }
-    public Iterable<Projecte> getEmpleats() {return projectesActuals;}
+    public int getNumParticipacions(){ return participacionsActuals.size();}
     
-    public void addProjecte( Projecte nou ) {
-        if(!projectesActuals.contains(nou)) {
-            projectesActuals.add(nou);
-            nou.addEmpleat(this);
+    public Participacio getParticipacio(int idx) {
+        return participacionsActuals.get(idx);
+    }
+    public Iterable<Participacio> getParticipacions() {return participacionsActuals;}
+    
+    public void addProjecte( Projecte nou, String rol ) {
+        
+        Participacio p = new Participacio(this,nou, rol);
+        
+        if(!participacionsActuals.contains(p)) {
+            participacionsActuals.add(p);
+            //nou.addEmpleat(this);// ???????????????
         }
     }
    
     public boolean removeProjecte( Projecte aDonarDeBaixa)
     {
-        boolean esborrat = projectesActuals.remove(aDonarDeBaixa);
+        boolean esborrat = participacionsActuals.remove(aDonarDeBaixa);
         if(esborrat) 
         {
             aDonarDeBaixa.removeEmpleat(this);
